@@ -1,15 +1,6 @@
 import ProductCard from '../components/ProductCard'
 import { createClient, Entry } from 'contentful'
-import { Product } from '../types/types';
 
-type Watch = {
-  casio: String,
-  stock: Number,
-}
-
-type ProductsProps = {
-  products: Product[];
-};
 
 const spaceId :string = `${process.env.SPACE_ID}`;
 const constDelAt: string = `${process.env.CDA_AT}`;
@@ -21,7 +12,7 @@ export async function getStaticProps() {
     accessToken: constDelAt,
   });
 
-  const { items } = await contentfulClient.getEntries<Entry<Product>>({
+  const { items } = await contentfulClient.getEntries({
     content_type: 'product'
   });
 
@@ -32,12 +23,12 @@ export async function getStaticProps() {
   }
 }
 
-export default function Products({ products }: ProductsProps) {
+export default function Products({ products }: any) {
   return (
     
     <div className="product-list">
-      {products.map( product => (
-         <ProductCard key={product.sys.id} product={product} />
+      {products.map((p: any) => (
+         <ProductCard key={p.sys.id} product={p} />
       ))}
       <style jsx>{
         `
